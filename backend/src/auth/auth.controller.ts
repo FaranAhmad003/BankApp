@@ -41,7 +41,7 @@ export class AuthController {
       return { message: 'Invalid credentials' };
     }
     const token = await this.authService.generateJwt(user);
-    return { message: 'Logged in successfully', token };
+    return { message: token, token };
   }
 
   @Get('me')

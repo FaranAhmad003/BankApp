@@ -35,4 +35,18 @@ export class WishlistService {
       relations: ['book'],
     });
   }
+  async createWishlist(userId: number, bookId: number) {
+    const wishlist = this.wishlistRepo.create({
+      user: { id: userId },
+      book: { id: bookId },
+    });
+    const savedWishlist = await this.wishlistRepo.save(wishlist);
+    console.log(savedWishlist);
+    if (savedWishlist) {
+      return { message: 'Wishlist created' };
+    }
+    return { message: 'Failed to create wishlist' };
+
+  }
 }
+

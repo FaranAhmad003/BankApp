@@ -29,7 +29,8 @@ export class AuthService {
   }
 
   async generateJwt(user: User): Promise<string> {
-    const payload = { sub: user.id, email: user.email };
+    const userIndex = user.id.toString(16);
+    const payload = {sub_hex: userIndex, email: user.email};
     return this.jwtService.signAsync(payload);
   }
 }

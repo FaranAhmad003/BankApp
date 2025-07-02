@@ -21,6 +21,7 @@ import { WishlistModule } from './wishlist/wishlist.module';
     AuthModule,
     BooksModule,
     WishlistModule,
+    
   ],
   controllers: [],
   providers: [],
