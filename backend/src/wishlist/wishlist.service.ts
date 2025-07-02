@@ -48,5 +48,17 @@ export class WishlistService {
     return { message: 'Failed to create wishlist' };
 
   }
+
+  async remove(userId: number, bookId: number) {
+    const existing = await this.wishlistRepo.findOne({
+      where: { user: { id: userId }, book: { id: bookId } },
+      relations: ['user', 'book'],
+    });
+    if (existing) {
+      await this.wishlistRepo.remove(existing);
+      return { message: 'Removed from wishlist' };
+    }
+    return { message: 'Wishlist entry not found' };
+  }
 }
 

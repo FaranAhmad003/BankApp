@@ -1,6 +1,6 @@
 // backend/src/wishlist/wishlist.controller.ts
 
-import { Controller, Post, Param, Get, Headers, Body } from '@nestjs/common';
+import { Controller, Post, Param, Get, Headers, Body, Delete } from '@nestjs/common';
 import { WishlistService } from './wishlist.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -70,5 +70,19 @@ async createWishlist(
   }
 }
 
+@Delete(':bookId')
+async removeFromWishlist(
+  @Param('bookId') bookId: string,
+  @Headers('authorization') authHeader: string
+) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { message: 'Unauthorized access' };
+  }
+  const token = authHeader.split(' ')[1];
+  const payload = await this.jwtService.verifyAsync(token, { secret: process.env.JWT_SECRET });
+  const userId = parseInt(payload.sub_hex, 16);
+  // Remove the wishlist entry for this user and book
+  return this.wishlistService.remove(userId, parseInt(bookId));
+}
 
 }
