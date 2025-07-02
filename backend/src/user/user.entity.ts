@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Wishlist } from '../wishlist/wishlist.entity';
 
 @Entity('users')
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Wishlist, (wishlist) => wishlist.user)
+  wishlist: Wishlist[];
 }
