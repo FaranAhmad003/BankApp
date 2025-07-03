@@ -12,12 +12,19 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(email: string, password: string) {
-    const existing = await this.userRepo.findOne({ where: { email } });
-    if (existing) throw new Error('User already exists');
-    const user = this.userRepo.create({ email, password });
-    return this.userRepo.save(user);
-  }
+async signup(
+  firstname: string,
+  lastname: string,
+  email: string,
+  password: string
+): Promise<User | null> {
+  const existing = await this.userRepo.findOne({ where: { email } });
+  if (existing) return null;
+
+  const user = this.userRepo.create({ firstname, lastname, email, password });
+  return this.userRepo.save(user);
+}
+
 
   async validateUser(email: string, password: string): Promise<User> {
    const user = await this.userRepo.findOne({ where: { email } });

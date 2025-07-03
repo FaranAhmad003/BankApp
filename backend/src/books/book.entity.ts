@@ -21,6 +21,9 @@ export class Book {
   @Column('numeric', { precision: 10, scale: 2 })
   price: number;
 
+  @Column({ type: 'int', default: 10 })
+  quantity: number;
+
   @OneToMany(() => Wishlist, (wishlist) => wishlist.book)
   wishlists: Wishlist[];
 }

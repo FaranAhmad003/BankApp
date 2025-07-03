@@ -4,6 +4,10 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { BooksModule } from './books/books.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import {TransactionModule} from './transaction/transaction.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+
 
 @Module({
   imports: [
@@ -21,7 +25,15 @@ import { WishlistModule } from './wishlist/wishlist.module';
     AuthModule,
     BooksModule,
     WishlistModule,
+    TransactionModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+      playground: true,
+    }),
     
+
+
   ],
   controllers: [],
   providers: [],
